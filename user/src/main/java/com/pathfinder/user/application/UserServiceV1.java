@@ -65,21 +65,6 @@ public class UserServiceV1 {
         log.info("[User Service] 회원가입 완료 - Username: {}, Role: {}",
                 user.getUsername(), user.getRole());
 
-        // 5. 배송 담당자 역할인 경우 Kafka 이벤트 발행
-        /*if (requestDto.getRole() == UserRoleEnum.DELIVERY_MANAGER) {
-
-            NewDeliveryManagerEvent event = NewDeliveryManagerEvent.builder()
-                    .username(user.getUsername())
-                    .deliveryManagerType(requestDto.getDeliveryManagerType().name())  // HUB or COMPANY
-                    .hubId(requestDto.getHubId())        // 허브 ID
-                    .build();
-
-            // Kafka로 이벤트 발행
-            userEventProducer.publishNewDeliveryManagerEvent(event);
-
-            log.info("[User Service] 배송 담당자 등록 이벤트 발행 - Username: {}",
-                    user.getUsername());
-        }*/
         log.info("회원가입 성공 - username: {}, role: {}", saveUser.getUsername(), saveUser.getRole());
         return SignupResponseDto.of(saveUser);
     }
@@ -93,7 +78,12 @@ public class UserServiceV1 {
         if(!sortBy.equals("modifiedAt") || !sortBy.isEmpty() && !sortBy.isBlank()) {
             sortBy = "createdAt";
         }
-
+        if (!sortBy.equals("modifiedAt") && !sortBy.equals("createdAt")) {
+            sortBy = "createdAt";
+        }
+        if (sortBy == null || sortBy.isBlank()) {
+            sortBy = "createdAt";
+        }
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page>0?page-1:page, size, sort);
