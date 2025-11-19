@@ -1,0 +1,25 @@
+jwt:
+  secret:
+    key: c3BhcnRhX3Rpa2l0YWthX2JhcHppcF8xMjM0NTY3ODk=
+
+spring:
+  application:
+    name: hub-service
+  config:
+    import: "configserver:http://localhost:19000"
+  cloud:
+    config:
+      name: hub-service
+      profile: dev
+      enabled: true
+#      fail-fast: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway,health,routes,metrics
+  endpoint:
+    gateway:
+      access: unrestricted
+    health:
+      show-details: always

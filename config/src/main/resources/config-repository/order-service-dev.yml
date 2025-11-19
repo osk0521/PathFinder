@@ -1,0 +1,15 @@
+server:
+  port: 8084
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/order_db
+    username: pathfinder
+    password: pathfinder123
+  data:
+    redis:
+      database: 3
+
+springdoc:
+  api-docs:
+    path: /springdoc/openapi3-order-service.json

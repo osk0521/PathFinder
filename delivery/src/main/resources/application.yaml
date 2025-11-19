@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: delivery-service
+  config:
+    import: "configserver:http://localhost:19000"
+  cloud:
+    config:
+      name: delivery-service
+      profile: dev
+      fail-fast: true

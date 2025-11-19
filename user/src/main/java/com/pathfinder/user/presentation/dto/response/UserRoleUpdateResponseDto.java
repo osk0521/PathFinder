@@ -1,0 +1,43 @@
+package com.pathfinder.user.presentation.dto.response;
+
+import com.pathfinder.user.domain.entity.UserEntity;
+import com.pathfinder.user.domain.enums.UserRoleEnum;
+import com.pathfinder.user.domain.enums.UserStatusEnum;
+import lombok.Builder;
+import lombok.Getter;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+
+@Getter
+@Builder
+public class UserRoleUpdateResponseDto {
+
+    private String username;
+
+    private String email;
+
+    private String name;
+
+    private UserRoleEnum role;
+
+    private Instant modifiedAt;
+
+    private String modifiedBy;
+
+    private boolean isDeleted;
+
+    private UserStatusEnum status;
+
+    public static UserRoleUpdateResponseDto of(UserEntity user) {
+        return UserRoleUpdateResponseDto.builder()
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .name(user.getName())
+                .role(user.getRole())
+                .status(user.getStatus())
+                .modifiedAt(user.getModifiedAt())
+                .modifiedBy(user.getModifiedBy())
+                .build();
+    }
+}
